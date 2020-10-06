@@ -24,6 +24,9 @@ RUN apt-get update \
         libzip-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Install PCOV as CodeCoverage Driver
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 # Install PHP extensions.
 RUN docker-php-ext-install \
         bcmath \
@@ -69,9 +72,6 @@ RUN chown -R www-data:www-data /var/www
 USER www-data
 RUN /usr/bin/composer global require hirak/prestissimo
 USER root
-
-# Add xdebug configuration
-COPY app/xdebug/xdebug.ini /usr/local/etc/php/conf.d/
 
 # Install Mailhog sendmail (mhsendmail).
 RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -

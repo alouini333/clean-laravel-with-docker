@@ -38,4 +38,8 @@ phpcbf() {
     docker-compose exec --user $USER app ./vendor/bin/phpcbf
 }
 
+test() {
+    docker-compose exec --user $USER app ./vendor/bin/phpunit --coverage-text --coverage-html coverage
+}
+
 "$@"
